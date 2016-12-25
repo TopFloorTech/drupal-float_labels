@@ -6,7 +6,7 @@
 
     var $elements = $('.float-labels-include', context)
       .not('.float-labels-processed')
-      .add($forms.find(':input').not('.float-labels-processed, :button, :hidden'));
+      .add($forms.find(':input, textarea').not('.float-labels-processed, :button, :hidden'));
 
     if (settings.includes && settings.includes.length > 0) {
       $elements = $elements.is(settings.includes.join(', '));
@@ -29,10 +29,10 @@
 
       $label.remove();
     }
-    else if (element.hasAttribute('title')) {
+    else if (element.attr('title')) {
       text = element.attr('title');
     }
-    else if (element.hasAttribute('placeholder')) {
+    else if (element.attr('placeholder')) {
       text = element.attr('placeholder');
     }
 
