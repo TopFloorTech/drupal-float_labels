@@ -1,42 +1,38 @@
 .float-labels-wrapper {
   display: flex;
-  font-size: 16px;
+  font-size: 1em;
 }
 
 .float-labels-wrapper .float-labels-label {
   font-size: inherit;
   font-weight: 400;
-  opacity: 0.4;
+  opacity: 0.45;
   pointer-events: none;
-  margin-left: 8px;
-  margin-top: 0.2em;
   position: absolute;
-  transform: translate3d(0, 11px, 0) scale(1);
+  transform: translate3d(0, 0.5em, 0) scale(1);
   transform-origin: left top;
   transition: 240ms;
+  padding-left: 0.25em;
+  padding-top: 0.1em;
 }
-
 .float-labels-wrapper.float-labels-focused .float-labels-label {
-  opacity: 8;
-  transform: scale(0.75);
-  color: blue;
+  opacity: 1;
+  transform: scale(0.7);
+  padding-left: 0.5em;
 }
 
-.float-labels-wrapper .float-labels-include {
+.float-labels-wrapper .float-labels-item {
   align-self: flex-end;
-  font-size: inherit !important;
-  padding-top: 17px;
+  font-size: inherit;
+  padding: 1em 0.25em 0.25em;
 }
-
-.float-labels-wrapper .float-labels-include::-webkit-input-placeholder {
+.float-labels-wrapper .float-labels-item::-webkit-input-placeholder {
   color: transparent;
   transition: 240ms;
 }
-
-.float-labels-wrapper .float-labels-include:focus::-webkit-input-placeholder {
+.float-labels-wrapper .float-labels-item:focus::-webkit-input-placeholder {
   transition: none;
 }
-
-.float-labels-wrapper .float-labels-focused .float-labels-include::-webkit-input-placeholder {
+.float-labels-wrapper.float-labels-focused .float-labels-item::-webkit-input-placeholder {
   color: #bbb;
 }
