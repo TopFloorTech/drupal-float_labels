@@ -6,7 +6,7 @@
 
     var $elements = $('.float-labels-include', context)
       .not('.float-labels-processed')
-      .add($forms.find(':input, textarea').not('.float-labels-processed, :button, :hidden'));
+      .add($forms.find(':input:text, textarea').not('.float-labels-processed, :button, :hidden'));
 
     if (settings.includes && settings.includes.length > 0) {
       $elements = $elements.is(settings.includes.join(', '));
