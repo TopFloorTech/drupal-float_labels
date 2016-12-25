@@ -18,7 +18,7 @@
 .float-labels-wrapper.float-labels-focused .float-labels-label {
   opacity: 1;
   transform: scale(0.7);
-  padding-left: 0.5em;
+  padding-left: 0.4em;
 }
 
 .float-labels-wrapper .float-labels-item {
