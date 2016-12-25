@@ -1,0 +1,10 @@
+float_labels:
+  version: VERSION
+  css:
+    theme:
+      css/float_labels.css: {}
+  js:
+    js/float_labels.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal

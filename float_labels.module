@@ -1,0 +1,123 @@
+<?php
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_form_alter().
+ */
+function float_labels_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+}
+
+/**
+ * Implements hook_element_info_alter().
+ */
+function float_labels_element_info_alter(array &$types) {
+  $allowed_types = ['form', 'textarea', 'textfield', 'tel', 'email', 'url',
+    'password', 'password_confirm'];
+
+  foreach (array_keys($types) as $type) {
+    if (in_array($type, $allowed_types)) {
+      $types[$type]['#process'][] = 'float_labels_process_element';
+    }
+  }
+}
+
+/**
+ * Element process callback.
+ *
+ * @param array $element
+ *   The render array element.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The FormStateInterface object for this form
+ *
+ * @return array
+ *   The processed element.
+ */
+function float_labels_process_element($element, &$form_state) {
+  $form = $form_state->getCompleteForm();
+
+  $float_labels = NULL;
+  if (isset($element['#float_labels'])) {
+    $float_labels = $element['#float_labels'];
+  } elseif (isset($form['#float_labels'])) {
+    $float_labels = $form['#float_labels'];
+  }
+
+  if (is_null($float_labels)) {
+    $float_labels = float_labels_should_process_form($form);
+  }
+
+  if ($float_labels) {
+    $action = $float_labels == TRUE ? 'include' : 'exclude';
+
+    if ($element['#type'] == 'form') {
+      $element['#attributes']['class'][] = 'float-labels-' . $action . '-children';
+    } else {
+      $element['#attributes']['class'][] = 'float-labels-' . $action;
+    }
+
+    float_labels_attach($element);
+  }
+
+  return $element;
+}
+
+function float_labels_should_process_form(array $form) {
+  $config = \Drupal::config('float_labels.settings');
+  $newLines = '/(\r\n|\r|\n)/';
+  $form_id = $form['#form_id'];
+  $shouldProcess = FALSE;
+
+  $included_forms = preg_split($newLines, $config->get('included_forms'));
+
+  foreach ($included_forms as $form_match) {
+    if (strpos($form_match, '/') === 0) {
+      if (preg_match($form_match, $form_id)) {
+        $shouldProcess = TRUE;
+        break;
+      }
+    } elseif ($form_match == $form_id) {
+      $shouldProcess = TRUE;
+      break;
+    }
+  }
+
+  if ($shouldProcess) {
+    $excluded_forms = preg_split($newLines, $config->get('excluded_forms'));
+
+    foreach ($excluded_forms as $form_match) {
+      if (strpos($form_match, '/') === 0) {
+        if (preg_match($form_match, $form_id)) {
+          $shouldProcess = FALSE;
+          break;
+        }
+      } elseif ($form_match == $form_id) {
+        $shouldProcess = FALSE;
+        break;
+      }
+    }
+  }
+
+  return $shouldProcess;
+}
+
+/**
+ * Adds placeholder to form element.
+ *
+ * @param array $element
+ *   Form API element.
+ */
+function float_labels_attach(&$element) {
+  $config = \Drupal::config('float_labels.settings');
+
+  // Add settings
+  $newLines = '/(\r\n|\r|\n)/';
+
+  $element['#attached']['drupalSettings']['float_labels'] = [
+    'include' => preg_split($newLines, $config->get('included_selectors')),
+    'exclude' => preg_split($newLines, $config->get('excluded_selectors')),
+  ];
+
+  // Adding module JS file.
+  $element['#attached']['library'][] = 'float_labels/float_labels';
+}

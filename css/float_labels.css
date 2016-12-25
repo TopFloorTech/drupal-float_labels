@@ -1,0 +1,42 @@
+.float-labels-wrapper {
+  display: flex;
+  font-size: 16px;
+}
+
+.float-labels-wrapper .float-labels-label {
+  font-size: inherit;
+  font-weight: 400;
+  opacity: 0.4;
+  pointer-events: none;
+  margin-left: 8px;
+  margin-top: 0.1em;
+  position: absolute;
+  transform: translate3d(0, 11px, 0) scale(1);
+  transform-origin: left top;
+  transition: 240ms;
+}
+
+.float-labels-wrapper.float-labels-focused .float-labels-label {
+  opacity: 8;
+  transform: scale(0.75);
+  color: blue;
+}
+
+.float-labels-wrapper .float-labels-include {
+  align-self: flex-end;
+  font-size: inherit !important;
+  padding-top: 17px;
+}
+
+.float-labels-wrapper .float-labels-include::-webkit-input-placeholder {
+  color: transparent;
+  transition: 240ms;
+}
+
+.float-labels-wrapper .float-labels-include:focus::-webkit-input-placeholder {
+  transition: none;
+}
+
+.float-labels-wrapper .float-labels-focused .float-labels-include::-webkit-input-placeholder {
+  color: #bbb;
+}
