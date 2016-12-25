@@ -21,7 +21,7 @@
 
   function getLabel(element) {
     var id = element.attr('id');
-    var $label = $('label[for=' + id + ']');
+    var $label = $(element).closest('form').find('label[for=' + id + ']');
     var text = '';
 
     if ($label.length > 0) {
