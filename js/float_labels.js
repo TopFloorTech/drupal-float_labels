@@ -52,18 +52,30 @@
         .addClass('float-labels-processed');
     });
 
-    $('.float-labels-processed').on('focus blur', function (e) {
+    var $processed = $('.float-labels-processed');
+
+    $processed.on('focus blur', function (e) {
       $(this).parents('.float-labels-wrapper').toggleClass('float-labels-focused', (e.type === 'focus' || this.value.length > 0));
     }).trigger('blur');
+
+    $processed.on('change', function (e) {
+      $(this).not(':focus').trigger('blur');
+    });
+  }
+
+  function getFloatLabelSettings(settings) {
+    if (settings.hasOwnProperty('float_labels')) {
+      settings = settings.float_labels;
+    } else {
+      settings = Drupal.settings.float_labels;
+    }
+
+    return settings;
   }
 
   Drupal.behaviors.floatLabels = {
     attach: function (context, settings) {
-      if (settings.hasOwnProperty('float_labels')) {
-        settings = settings.float_labels;
-      } else {
-        settings = Drupal.settings.float_labels;
-      }
+      settings = getFloatLabelSettings(settings);
 
       var $elements = getFloatLabelElements(context, settings);
 
