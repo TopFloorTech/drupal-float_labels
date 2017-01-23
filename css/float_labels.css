@@ -6,7 +6,7 @@
 .float-labels-wrapper .float-labels-label {
   font-size: inherit;
   font-weight: 400;
-  opacity: 0.45;
+  opacity: 0.6;
   pointer-events: none;
   position: absolute;
   transform: translate3d(0, 0.5em, 0) scale(1);
