@@ -12,7 +12,7 @@
   transform: translate3d(0, 0.5em, 0) scale(1);
   transform-origin: left top;
   transition: 240ms;
-  padding-left: 0.25em;
+  padding-left: 0.5em;
   padding-top: 0.1em;
 }
 .float-labels-wrapper.float-labels-focused .float-labels-label {
