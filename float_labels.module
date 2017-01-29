@@ -116,6 +116,7 @@ function float_labels_attach(&$element) {
   $element['#attached']['drupalSettings']['float_labels'] = [
     'include' => preg_split($newLines, $config->get('included_selectors')),
     'exclude' => preg_split($newLines, $config->get('excluded_selectors')),
+    'mark_required' => $config->get('mark_required'),
   ];
 
   // Adding module JS file.

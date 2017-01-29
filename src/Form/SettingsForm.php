@@ -23,6 +23,7 @@ class SettingsForm extends ConfigFormBase {
       ->set('excluded_forms', $form_state->getValue('excluded_forms'))
       ->set('included_selectors', $form_state->getValue('included_selectors'))
       ->set('excluded_selectors', $form_state->getValue('excluded_selectors'))
+      ->set('mark_required', $form_state->getValue('mark_required'))
       ->save();
 
     parent::submitForm($form, $form_state);
@@ -83,7 +84,19 @@ class SettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('excluded_selectors'),
     ];
 
+    $form['options'] = [
+      '#type' => 'details',
+      '#open' => FALSE,
+      '#title' => $this->t('Options'),
+    ];
+
+    $form['options']['mark_required'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Mark required fields'),
+      '#description' => $this->t('Mark fields that are required with a "*"'),
+      '#default_value' => $config->get('mark_required'),
+    ];
+
     return parent::buildForm($form, $form_state);
   }
-
 }

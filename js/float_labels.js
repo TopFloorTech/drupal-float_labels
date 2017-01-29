@@ -39,15 +39,15 @@
         return text;
     }
 
-    function processFloatLabels($elements) {
+    function processFloatLabels($elements, settings) {
         $elements.each(function () {
             var $element = $(this).addClass('float-labels-item');
             var id = $(this).attr('id');
             var labelText = getLabel($element);
-            var required = $element.attr('required');
+            var required = $element.prop('required');
 
             $element
-                .wrap($('<div class="float-labels-wrapper">').toggleClass('float-labels-required', required))
+                .wrap($('<div class="float-labels-wrapper">').toggleClass('float-labels-required', required).toggleClass('float-labels-star', settings.mark_required))
                 .before($('<label class="float-labels-label">').attr('for', id).text(labelText))
                 .removeAttr('placeholder')
                 .addClass('float-labels-processed');
@@ -80,7 +80,7 @@
 
             var $elements = getFloatLabelElements(context, settings);
 
-            processFloatLabels($elements);
+            processFloatLabels($elements, settings);
         }
     };
 }(jQuery));
