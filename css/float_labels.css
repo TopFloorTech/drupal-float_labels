@@ -25,18 +25,18 @@
   content: "*";
 }
 
-.float-labels-wrapper .float-labels-item {
+.float-labels-wrapper .float-labels-item:not(.form-select) {
   align-self: flex-end;
   font-size: inherit;
   padding: 1em 0.5em 0.25em;
 }
-.float-labels-wrapper .float-labels-item::-webkit-input-placeholder {
+.float-labels-wrapper .float-labels-item:not(.form-select)::-webkit-input-placeholder {
   color: transparent;
   transition: 240ms;
 }
-.float-labels-wrapper .float-labels-item:focus::-webkit-input-placeholder {
+.float-labels-wrapper .float-labels-item:not(.form-select):focus::-webkit-input-placeholder {
   transition: none;
 }
-.float-labels-wrapper.float-labels-focused .float-labels-item::-webkit-input-placeholder {
+.float-labels-wrapper.float-labels-focused .float-labels-item:not(.form-select)::-webkit-input-placeholder {
   color: #bbb;
 }

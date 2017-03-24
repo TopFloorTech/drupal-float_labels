@@ -15,6 +15,10 @@ function float_labels_element_info_alter(array &$types) {
   $allowed_types = ['form', 'textarea', 'textfield', 'tel', 'email', 'url',
     'password', 'password_confirm'];
 
+  if (\Drupal::config('float_labels.settings')->get('select_field_default_value')) {
+    $allowed_types[] = 'select';
+  }
+
   foreach (array_keys($types) as $type) {
     if (in_array($type, $allowed_types)) {
       $types[$type]['#process'][] = 'float_labels_process_element';
@@ -56,10 +60,30 @@ function float_labels_process_element($element, &$form_state) {
       $element['#attributes']['class'][] = 'float-labels-' . $action;
     }
 
+    if ($element['#type'] == 'select') {
+      float_labels_select($element);
+    }
+
     float_labels_attach($element);
   }
 
   return $element;
+}
+
+function float_labels_select(array &$element) {
+  $template = ' - %s - ';
+
+  /** @var \Drupal\Core\StringTranslation\TranslatableMarkup $title */
+  $title = $element['#title'];
+  $label = t(sprintf($template, is_string($title) ? $title : $title->getUntranslatedString()));
+
+  if (array_key_exists('#empty_value', $element)) {
+    $empty_value = $element['#empty_value'];
+
+    $element['#options'] = [$empty_value => $label] + $element['#options'];
+  } elseif (array_key_exists('_none', $element['#options'])) {
+    $element['#options']['_none'] = $label;
+  }
 }
 
 function float_labels_should_process_form(array $form) {
