@@ -57,7 +57,7 @@
     var $processed = $('.float-labels-processed');
 
     $processed.on('focus blur', function (e) {
-      $(this).parents('.float-labels-wrapper').toggleClass('float-labels-focused', (e.type === 'focus' || this.value.length > 0));
+      $(this).parents('.float-labels-wrapper').toggleClass('float-labels-focused', (e.type === 'focus' || (this.value && this.value.length > 0)));
     }).trigger('blur');
 
     $processed.on('change', function (e) {
