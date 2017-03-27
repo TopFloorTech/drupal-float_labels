@@ -5,9 +5,8 @@
     var $forms = $('.float-labels-include-children', context);
 
     var $elements = $('.float-labels-include', context)
-      .not('.float-labels-processed')
-      .not('select')
-      .add($forms.find(':input:text, textarea').not('.float-labels-processed, :button, :hidden'));
+      .add($forms.find(':input:text, textarea'))
+      .not('.float-labels-processed, :button, :hidden, select');
 
     if (settings.includes && settings.includes.length > 0) {
       $elements = $elements.is(settings.includes.join(', '));
@@ -57,7 +56,7 @@
     var $processed = $('.float-labels-processed');
 
     $processed.on('focus blur', function (e) {
-      $(this).parents('.float-labels-wrapper').toggleClass('float-labels-focused', (e.type === 'focus' || (this.value && this.value.length > 0)));
+      $(this).parents('.float-labels-wrapper').toggleClass('float-labels-focused', (e.type === 'focus' || this.value.length > 0));
     }).trigger('blur');
 
     $processed.on('change', function (e) {
@@ -78,8 +77,8 @@
   Drupal.behaviors.floatLabels = {
     attach: function (context, settings) {
       settings = getFloatLabelSettings(settings);
-      var $elements = getFloatLabelElements(context, settings);
-      processFloatLabels($elements, settings);
+      var elements = getFloatLabelElements(context, settings);
+      processFloatLabels(elements, settings);
     }
   };
 }(jQuery));
