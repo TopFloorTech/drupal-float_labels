@@ -1,12 +1,4 @@
 <?php
-use Drupal\Core\Form\FormStateInterface;
-
-/**
- * Implements hook_form_alter().
- */
-function float_labels_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-
-}
 
 /**
  * Implements hook_element_info_alter().
@@ -70,6 +62,12 @@ function float_labels_process_element($element, &$form_state) {
   return $element;
 }
 
+/**
+ * Replace a select field's empty value with its label.
+ *
+ * @param array $element
+ *   The element.
+ */
 function float_labels_select(array &$element) {
   $template = ' - %s - ';
 
@@ -86,6 +84,15 @@ function float_labels_select(array &$element) {
   }
 }
 
+/**
+ * Determine if float_labels should handle a form or not.
+ *
+ * @param array $form
+ *   The form.
+ *
+ * @return bool
+ *   TRUE if float_labels should process the form, FALSE otherwise.
+ */
 function float_labels_should_process_form(array $form) {
   $config = \Drupal::config('float_labels.settings');
   $newLines = '/(\r\n|\r|\n)/';
