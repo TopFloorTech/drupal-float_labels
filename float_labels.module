@@ -46,6 +46,10 @@ function float_labels_process_element($element, &$form_state) {
   if ($float_labels) {
     $action = $float_labels == TRUE ? 'include' : 'exclude';
 
+    if(isset($element['#attributes']['class']) && !is_array( $element['#attributes']['class'])) {
+      $element['#attributes']['class'] = array( $element['#attributes']['class']);
+    }
+
     if ($element['#type'] == 'form') {
       $element['#attributes']['class'][] = 'float-labels-' . $action . '-children';
     } else {
