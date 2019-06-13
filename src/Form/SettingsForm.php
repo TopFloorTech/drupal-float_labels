@@ -30,6 +30,7 @@ class SettingsForm extends ConfigFormBase {
       ->set('excluded_selectors', $form_state->getValue('excluded_selectors'))
       ->set('mark_required', $form_state->getValue('mark_required'))
       ->set('select_field_default_value', $form_state->getValue('select_field_default_value'))
+      ->set('select_field_default_value_template', $form_state->getValue('select_field_default_value_template'))
       ->save();
 
     parent::submitForm($form, $form_state);
@@ -110,6 +111,13 @@ class SettingsForm extends ConfigFormBase {
       '#type' => 'checkbox',
       '#title' => $this->t('Replace default select field option with its label.'),
       '#default_value' => $config->get('select_field_default_value'),
+    ];
+
+    $form['options']['select_field_default_value_template'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Select field default value template'),
+      '#description' => $this->t('A string template where "%s" is the form label.'),
+      '#default_value' => $config->get('select_field_default_value_template') ?? ' - %s - ',
     ];
 
     return parent::buildForm($form, $form_state);

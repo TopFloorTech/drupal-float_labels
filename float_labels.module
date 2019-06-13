@@ -73,7 +73,7 @@ function float_labels_process_element($element, &$form_state) {
  *   The element.
  */
 function float_labels_select(array &$element) {
-  $template = ' - %s - ';
+  $template = \Drupal::config('float_labels.settings')->get('select_field_default_value_template') ?? ' - %s - ';
 
   /** @var \Drupal\Core\StringTranslation\TranslatableMarkup $title */
   $title = $element['#title'];
